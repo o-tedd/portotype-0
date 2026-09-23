@@ -69,8 +69,27 @@ Veja [docs/FIREBASE_SETUP.md](docs/FIREBASE_SETUP.md) para habilitar Authenticat
 - [Status atual](docs/PROJECT_STATUS.md)
 - [Arquitetura](docs/ARCHITECTURE.md)
 - [Configuração Firebase](docs/FIREBASE_SETUP.md)
+- [Desenvolvimento local e VS Code](docs/LOCAL_DEVELOPMENT.md)
 - [Fluxo de desenvolvimento](docs/DEVELOPMENT_WORKFLOW.md)
 - [Architecture Decision Records](docs/adr/README.md)
+
+## Trabalhar no VS Code
+
+O repositório pode ser clonado e editado manualmente em qualquer computador:
+
+```bash
+git clone https://github.com/o-tedd/portotype-0.git
+cd portotype-0
+code .
+```
+
+Depois instale as dependências e crie o arquivo local do Firebase:
+
+```bash
+npm install
+```
+
+Consulte [docs/LOCAL_DEVELOPMENT.md](docs/LOCAL_DEVELOPMENT.md) para o fluxo completo de Git, VS Code, troca de computador e Dev Container/Codespaces.
 
 ## Como trabalharemos
 

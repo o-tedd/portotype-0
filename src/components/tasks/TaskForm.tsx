@@ -1,8 +1,4 @@
-import {
-  useEffect,
-  useState,
-  type FormEvent,
-} from "react";
+import { useState, type FormEvent } from "react";
 import type {
   Task,
   TaskDifficulty,
@@ -45,32 +41,29 @@ export function TaskForm({
   onSubmit,
   onCancel,
 }: TaskFormProps) {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [priority, setPriority] = useState<TaskPriority>("medium");
-  const [difficulty, setDifficulty] =
-    useState<TaskDifficulty>("medium");
-  const [scheduledAt, setScheduledAt] = useState("");
-  const [dueDate, setDueDate] = useState("");
-  const [estimatedDuration, setEstimatedDuration] = useState("");
-  const [externalUrl, setExternalUrl] = useState("");
-  const [notes, setNotes] = useState("");
-
-  useEffect(() => {
-    setTitle(task?.title ?? "");
-    setDescription(task?.description ?? "");
-    setPriority(task?.priority ?? "medium");
-    setDifficulty(task?.difficulty ?? "medium");
-    setScheduledAt(
-      toDateTimeLocal(task?.scheduledAt ?? defaultScheduledAt),
-    );
-    setDueDate(toDateTimeLocal(task?.dueDate));
-    setEstimatedDuration(
-      task?.estimatedDurationMinutes?.toString() ?? "",
-    );
-    setExternalUrl(task?.externalUrl ?? "");
-    setNotes(task?.notes ?? "");
-  }, [task, defaultScheduledAt]);
+  const [title, setTitle] = useState(task?.title ?? "");
+  const [description, setDescription] = useState(
+    task?.description ?? "",
+  );
+  const [priority, setPriority] = useState<TaskPriority>(
+    task?.priority ?? "medium",
+  );
+  const [difficulty, setDifficulty] = useState<TaskDifficulty>(
+    task?.difficulty ?? "medium",
+  );
+  const [scheduledAt, setScheduledAt] = useState(
+    toDateTimeLocal(task?.scheduledAt ?? defaultScheduledAt),
+  );
+  const [dueDate, setDueDate] = useState(
+    toDateTimeLocal(task?.dueDate),
+  );
+  const [estimatedDuration, setEstimatedDuration] = useState(
+    task?.estimatedDurationMinutes?.toString() ?? "",
+  );
+  const [externalUrl, setExternalUrl] = useState(
+    task?.externalUrl ?? "",
+  );
+  const [notes, setNotes] = useState(task?.notes ?? "");
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();

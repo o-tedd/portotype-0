@@ -28,13 +28,11 @@ A arquitetura do PORTOTYPE "0" deve permitir usar Firebase no MVP sem transforma
 
 Renderiza estado, coleta entrada do usuário e dispara ações.
 
-Não conhece Firestore.
+Não conhece Firebase diretamente.
 
 ### Hooks e Contexts
 
 Conectam estado React aos services.
-
-Exemplos futuros:
 
 ```text
 useAuth
@@ -47,8 +45,6 @@ useStatistics
 
 Contêm casos de uso e regras de negócio.
 
-Exemplos:
-
 ```text
 AuthService
 TaskService
@@ -59,24 +55,25 @@ StatisticsService
 
 ### Repository Contracts
 
-Definem as operações que a aplicação precisa sem definir como os dados são persistidos.
-
-Exemplo:
+Definem as operações necessárias sem definir como os dados são persistidos ou como a identidade é fornecida.
 
 ```text
+AuthRepository
+UserRepository
 TaskRepository
 SessionRepository
-UserRepository
 CertificateRepository
 ```
 
 ### Repository Adapters
 
-Implementam os contratos usando uma tecnologia específica.
+Implementam contratos usando tecnologia específica.
 
 MVP:
 
 ```text
+FirebaseAuthRepository
+FirebaseUserRepository
 FirebaseTaskRepository
 FirebaseSessionRepository
 ```
@@ -84,9 +81,45 @@ FirebaseSessionRepository
 Futuro:
 
 ```text
+ApiAuthRepository
+ApiUserRepository
 ApiTaskRepository
 ApiSessionRepository
 ```
+
+## Autenticação
+
+Fluxo atual:
+
+```text
+Login / Register
+      ↓
+useAuth
+      ↓
+AuthContext
+      ↓
+AuthService
+      ↓
+AuthRepository
+      ↓
+FirebaseAuthRepository
+      ↓
+Firebase Authentication
+```
+
+O perfil é separado da identidade:
+
+```text
+AuthUser
+   ↓
+AuthService.getOrCreateProfile()
+   ↓
+UserRepository
+   ↓
+users/{uid}
+```
+
+Isso permite trocar o provedor de identidade sem obrigar as páginas a conhecer a implementação.
 
 ## Migração futura
 

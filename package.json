@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "vitest run"
   },
   "dependencies": {
     "firebase": "latest",
@@ -28,7 +29,8 @@
     "tailwindcss": "^4.3.3",
     "typescript": "latest",
     "typescript-eslint": "latest",
-    "vite": "latest"
+    "vite": "latest",
+    "vitest": "latest"
   },
   "engines": {
     "node": ">=22.12.0"

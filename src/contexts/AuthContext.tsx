@@ -1,5 +1,4 @@
 import {
-  createContext,
   useCallback,
   useEffect,
   useMemo,
@@ -13,18 +12,10 @@ import type {
   RegisterInput,
   UserProfile,
 } from "../types/auth";
-
-export interface AuthContextValue {
-  user: AuthUser | null;
-  profile: UserProfile | null;
-  loading: boolean;
-  login(input: LoginInput): Promise<void>;
-  register(input: RegisterInput): Promise<void>;
-  logout(): Promise<void>;
-  sendPasswordReset(email: string): Promise<void>;
-}
-
-export const AuthContext = createContext<AuthContextValue | null>(null);
+import {
+  AuthContext,
+  type AuthContextValue,
+} from "./auth-context";
 
 interface AuthProviderProps {
   children: ReactNode;

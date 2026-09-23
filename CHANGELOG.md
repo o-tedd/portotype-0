@@ -13,12 +13,31 @@ O formato é inspirado em **Keep a Changelog**. Durante o MVP, as versões repre
 - fluxo de desenvolvimento em `docs/DEVELOPMENT_WORKFLOW.md`;
 - visão geral da arquitetura em `docs/ARCHITECTURE.md`;
 - template de Pull Request;
-- ADRs complementares sobre sessões, isolamento por UID e independência do Firebase.
+- ADRs complementares sobre sessões, isolamento por UID, independência do Firebase e autenticação;
+- `AuthRepository` e `UserRepository`;
+- `FirebaseAuthRepository` e `FirebaseUserRepository`;
+- `AuthService`, `AuthContext` e `useAuth`;
+- login com e-mail e senha;
+- cadastro com e-mail e senha;
+- logout;
+- recuperação de senha;
+- persistência local da sessão;
+- rotas públicas e rotas protegidas;
+- criação automática do perfil inicial em `users/{uid}`;
+- páginas de Login, Cadastro e Recuperação de Senha;
+- `firestore.rules` com isolamento inicial por UID;
+- guia `docs/FIREBASE_SETUP.md`.
 
 ### Changed
 
 - definido que Pull Requests e merges serão abertos/executados manualmente pelo proprietário do repositório;
-- definido que mudanças funcionais devem atualizar este changelog antes do merge.
+- definido que mudanças funcionais devem atualizar este changelog antes do merge;
+- layout autenticado agora exibe usuário e ação de logout;
+- cabeçalho passa a identificar o milestone MVP 0.2.
+
+### Security
+
+- acesso aos documentos de usuário no Firestore passa a ser limitado ao UID autenticado pelas regras versionadas no repositório.
 
 ---
 
@@ -40,10 +59,9 @@ O formato é inspirado em **Keep a Changelog**. Durante o MVP, as versões repre
 - GitHub Actions para lint e build;
 - roadmap inicial através de GitHub Issues.
 
-### Known issues
+### Fixed
 
-- o primeiro build da `main` após o merge da Foundation falhou por configuração incompatível em `tsconfig.node.json`;
-- a correção foi preparada separadamente na branch `fix/ci-typescript-config`.
+- configuração TypeScript do CI corrigida posteriormente no PR #4.
 
 ---
 

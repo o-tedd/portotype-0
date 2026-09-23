@@ -62,8 +62,8 @@ export function AppLayout() {
       <div className="min-w-0">
         <header className="flex items-center justify-between border-b border-slate-800 bg-slate-950/90 px-4 py-4 md:px-8">
           <div>
-            <p className="text-sm text-slate-400">MVP 0.2</p>
-            <p className="font-semibold">Authentication</p>
+            <p className="text-sm text-slate-400">MVP 0.3</p>
+            <p className="font-semibold">Tasks CRUD</p>
           </div>
 
           <div className="flex items-center gap-3">

@@ -47,7 +47,7 @@ PostgreSQL / outro banco
 
 ### Regra arquitetural
 
-Componentes React não devem acessar Firestore diretamente. Persistência deve passar por Services e Repositories.
+Componentes React não devem acessar Firebase diretamente. Persistência e autenticação passam pelas camadas de Service e Repository.
 
 ## Executando localmente
 
@@ -61,24 +61,14 @@ npm run dev
 
 Preencha `.env.local` com a configuração Web do seu projeto Firebase.
 
-## Variáveis Firebase
-
-```text
-VITE_FIREBASE_API_KEY
-VITE_FIREBASE_AUTH_DOMAIN
-VITE_FIREBASE_PROJECT_ID
-VITE_FIREBASE_STORAGE_BUCKET
-VITE_FIREBASE_MESSAGING_SENDER_ID
-VITE_FIREBASE_APP_ID
-```
-
-O arquivo `.env.local` não deve ser commitado.
+Veja [docs/FIREBASE_SETUP.md](docs/FIREBASE_SETUP.md) para habilitar Authentication, Firestore e publicar as Security Rules.
 
 ## Documentação do projeto
 
 - [Changelog](CHANGELOG.md)
 - [Status atual](docs/PROJECT_STATUS.md)
 - [Arquitetura](docs/ARCHITECTURE.md)
+- [Configuração Firebase](docs/FIREBASE_SETUP.md)
 - [Fluxo de desenvolvimento](docs/DEVELOPMENT_WORKFLOW.md)
 - [Architecture Decision Records](docs/adr/README.md)
 
@@ -111,6 +101,6 @@ devem estar passando.
 
 ## Status atual
 
-**MVP 0.1 — Foundation**
+**MVP 0.2 — Firebase Authentication — em desenvolvimento**
 
 Consulte [docs/PROJECT_STATUS.md](docs/PROJECT_STATUS.md) para o snapshot técnico mais recente.

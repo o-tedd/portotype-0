@@ -1,4 +1,11 @@
 import { useMemo, useState } from "react";
+import { DailyPlannerView } from "../components/planner/DailyPlannerView";
+import { MonthlyPlannerView } from "../components/planner/MonthlyPlannerView";
+import {
+  PlannerToolbar,
+  type PlannerViewMode,
+} from "../components/planner/PlannerToolbar";
+import { WeeklyPlannerView } from "../components/planner/WeeklyPlannerView";
 import { TaskCard } from "../components/tasks/TaskCard";
 import { TaskForm } from "../components/tasks/TaskForm";
 import { useTasks } from "../hooks/useTasks";
@@ -7,6 +14,7 @@ import type {
   TaskFormInput,
   TaskStatus,
 } from "../types/task";
+import { createDefaultScheduledDate } from "../utils/date";
 import { isTaskOverdue } from "../utils/task";
 
 type TaskFilter = "all" | TaskStatus | "overdue";
@@ -31,9 +39,13 @@ export function PlannerPage() {
     setStatus,
   } = useTasks();
 
+  const [view, setView] = useState<PlannerViewMode>("day");
+  const [selectedDate, setSelectedDate] = useState(() => new Date());
   const [filter, setFilter] = useState<TaskFilter>("all");
   const [formOpen, setFormOpen] = useState(false);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
+  const [defaultScheduledAt, setDefaultScheduledAt] =
+    useState<Date>();
 
   const statistics = useMemo(
     () => ({
@@ -51,7 +63,7 @@ export function PlannerPage() {
     [tasks],
   );
 
-  const visibleTasks = useMemo(() => {
+  const filteredTasks = useMemo(() => {
     if (filter === "all") {
       return tasks;
     }
@@ -63,19 +75,39 @@ export function PlannerPage() {
     return tasks.filter((task) => task.status === filter);
   }, [filter, tasks]);
 
+  const unscheduledTasks = useMemo(
+    () => filteredTasks.filter((task) => !task.scheduledAt),
+    [filteredTasks],
+  );
+
   function openCreateForm() {
     setEditingTask(null);
+    setDefaultScheduledAt(undefined);
+    setFormOpen(true);
+  }
+
+  function openCreateForDate(date: Date) {
+    setEditingTask(null);
+    setSelectedDate(date);
+    setDefaultScheduledAt(createDefaultScheduledDate(date));
     setFormOpen(true);
   }
 
   function openEditForm(task: Task) {
     setEditingTask(task);
+    setDefaultScheduledAt(undefined);
     setFormOpen(true);
   }
 
   function closeForm() {
     setEditingTask(null);
+    setDefaultScheduledAt(undefined);
     setFormOpen(false);
+  }
+
+  function selectCalendarDate(date: Date) {
+    setSelectedDate(date);
+    setView("day");
   }
 
   async function handleSubmit(input: TaskFormInput) {
@@ -126,8 +158,8 @@ export function PlannerPage() {
           <p className="text-sm text-slate-400">Organização</p>
           <h2 className="text-3xl font-bold">Planner</h2>
           <p className="mt-2 max-w-2xl text-sm text-slate-400">
-            Crie e acompanhe suas atividades. As visualizações diária,
-            semanal e mensal entram no próximo milestone do Planner.
+            Navegue por dia, semana ou mês. A data planejada organiza a
+            agenda; o prazo continua sendo a data limite da atividade.
           </p>
         </div>
 
@@ -165,8 +197,13 @@ export function PlannerPage() {
 
       {formOpen ? (
         <TaskForm
-          key={editingTask?.id ?? "new-task"}
+          key={
+            editingTask?.id ??
+            defaultScheduledAt?.getTime().toString() ??
+            "new-task"
+          }
           task={editingTask}
+          defaultScheduledAt={defaultScheduledAt}
           submitting={saving}
           onSubmit={handleSubmit}
           onCancel={closeForm}
@@ -181,6 +218,13 @@ export function PlannerPage() {
           {error}
         </div>
       ) : null}
+
+      <PlannerToolbar
+        view={view}
+        selectedDate={selectedDate}
+        onViewChange={setView}
+        onDateChange={setSelectedDate}
+      />
 
       <div className="flex flex-wrap gap-2">
         {filters.map((item) => (
@@ -207,27 +251,67 @@ export function PlannerPage() {
         >
           Carregando tarefas...
         </div>
-      ) : visibleTasks.length === 0 ? (
-        <div className="rounded-2xl border border-dashed border-slate-700 p-10 text-center">
-          <p className="font-medium">Nenhuma tarefa encontrada.</p>
-          <p className="mt-2 text-sm text-slate-500">
-            Crie uma nova tarefa ou selecione outro filtro.
-          </p>
-        </div>
       ) : (
-        <div className="grid gap-4 xl:grid-cols-2">
-          {visibleTasks.map((task) => (
-            <TaskCard
-              key={task.id}
-              task={task}
-              disabled={saving}
+        <>
+          {view === "day" ? (
+            <DailyPlannerView
+              date={selectedDate}
+              tasks={filteredTasks}
+              saving={saving}
               onEdit={openEditForm}
               onDelete={handleDelete}
               onStatusChange={handleStatusChange}
+              onCreateForDate={openCreateForDate}
             />
-          ))}
-        </div>
+          ) : null}
+
+          {view === "week" ? (
+            <WeeklyPlannerView
+              date={selectedDate}
+              tasks={filteredTasks}
+              onSelectDate={selectCalendarDate}
+              onSelectTask={openEditForm}
+            />
+          ) : null}
+
+          {view === "month" ? (
+            <MonthlyPlannerView
+              date={selectedDate}
+              tasks={filteredTasks}
+              onSelectDate={selectCalendarDate}
+              onSelectTask={openEditForm}
+            />
+          ) : null}
+        </>
       )}
+
+      {!loading && unscheduledTasks.length > 0 ? (
+        <section className="space-y-4">
+          <div>
+            <p className="text-sm text-slate-400">Caixa de entrada</p>
+            <h3 className="text-xl font-semibold">
+              Sem data planejada
+            </h3>
+            <p className="mt-1 text-sm text-slate-500">
+              Estas tarefas existem, mas ainda não ocupam um dia no
+              calendário.
+            </p>
+          </div>
+
+          <div className="grid gap-4 xl:grid-cols-2">
+            {unscheduledTasks.map((task) => (
+              <TaskCard
+                key={task.id}
+                task={task}
+                disabled={saving}
+                onEdit={openEditForm}
+                onDelete={handleDelete}
+                onStatusChange={handleStatusChange}
+              />
+            ))}
+          </div>
+        </section>
+      ) : null}
     </section>
   );
 }

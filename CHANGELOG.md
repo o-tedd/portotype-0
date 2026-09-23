@@ -26,7 +26,10 @@ O formato é inspirado em **Keep a Changelog**. Durante o MVP, as versões repre
 - criação automática do perfil inicial em `users/{uid}`;
 - páginas de Login, Cadastro e Recuperação de Senha;
 - `firestore.rules` com isolamento inicial por UID;
-- guia `docs/FIREBASE_SETUP.md`.
+- guia `docs/FIREBASE_SETUP.md`;
+- guia `docs/LOCAL_DEVELOPMENT.md` para uso manual com Git e VS Code;
+- recomendações compartilhadas de extensões e configurações do VS Code;
+- configuração opcional de Dev Container para ambiente Node 22 portátil.
 
 ### Changed
 

@@ -93,6 +93,7 @@ Antes de considerar uma mudança pronta:
 Uma branch só deve ser considerada pronta quando:
 
 ```text
+npm test
 npm run lint
 npm run build
 ```

@@ -27,7 +27,7 @@ function toFirestoreProfile(profile: UserProfile): FirebaseUserProfile {
   return {
     email: profile.email,
     name: profile.name,
-    photoUrl: profile.photoUrl,
+    ...(profile.photoUrl ? { photoUrl: profile.photoUrl } : {}),
     xp: profile.xp,
     level: profile.level,
     currentStreak: profile.currentStreak,
@@ -47,7 +47,7 @@ function fromFirestoreProfile(
     id,
     email: data.email,
     name: data.name,
-    photoUrl: data.photoUrl,
+    ...(data.photoUrl ? { photoUrl: data.photoUrl } : {}),
     xp: data.xp,
     level: data.level,
     currentStreak: data.currentStreak,
@@ -96,6 +96,10 @@ export class FirebaseUserRepository implements UserRepository {
 
     if (data.updatedAt) {
       firestoreData.updatedAt = Timestamp.fromDate(data.updatedAt);
+    }
+
+    if (data.photoUrl === undefined) {
+      delete firestoreData.photoUrl;
     }
 
     await updateDoc(doc(this.db, "users", userId), firestoreData);

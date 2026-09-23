@@ -86,9 +86,12 @@ Ao abrir os Pull Requests manualmente, integrar `docs/project-tracking` antes de
 - Security Rules iniciais;
 - documentação de setup Firebase.
 
+## Validação técnica
+
+O CI da branch `feat/firebase-auth` passou em `npm run lint` e `npm run build`.
+
 ## Pendente para concluir o milestone
 
-- validar CI da branch;
 - configurar credenciais Web reais em `.env.local`;
 - habilitar Email/Password no Firebase Console;
 - publicar `firestore.rules`;

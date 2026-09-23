@@ -12,6 +12,7 @@ import type {
 
 interface TaskFormProps {
   task?: Task | null;
+  defaultScheduledAt?: Date;
   submitting: boolean;
   onSubmit(input: TaskFormInput): Promise<void>;
   onCancel(): void;
@@ -39,6 +40,7 @@ function toDateTimeLocal(date?: Date): string {
 
 export function TaskForm({
   task,
+  defaultScheduledAt,
   submitting,
   onSubmit,
   onCancel,
@@ -48,6 +50,7 @@ export function TaskForm({
   const [priority, setPriority] = useState<TaskPriority>("medium");
   const [difficulty, setDifficulty] =
     useState<TaskDifficulty>("medium");
+  const [scheduledAt, setScheduledAt] = useState("");
   const [dueDate, setDueDate] = useState("");
   const [estimatedDuration, setEstimatedDuration] = useState("");
   const [externalUrl, setExternalUrl] = useState("");
@@ -58,13 +61,16 @@ export function TaskForm({
     setDescription(task?.description ?? "");
     setPriority(task?.priority ?? "medium");
     setDifficulty(task?.difficulty ?? "medium");
+    setScheduledAt(
+      toDateTimeLocal(task?.scheduledAt ?? defaultScheduledAt),
+    );
     setDueDate(toDateTimeLocal(task?.dueDate));
     setEstimatedDuration(
       task?.estimatedDurationMinutes?.toString() ?? "",
     );
     setExternalUrl(task?.externalUrl ?? "");
     setNotes(task?.notes ?? "");
-  }, [task]);
+  }, [task, defaultScheduledAt]);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -78,6 +84,9 @@ export function TaskForm({
       description,
       priority,
       difficulty,
+      scheduledAt: scheduledAt
+        ? new Date(scheduledAt)
+        : undefined,
       dueDate: dueDate ? new Date(dueDate) : undefined,
       estimatedDurationMinutes: parsedDuration,
       externalUrl,
@@ -170,6 +179,21 @@ export function TaskForm({
         </label>
 
         <label className="block">
+          <span className="mb-2 block text-sm font-medium">
+            Planejada para
+          </span>
+          <input
+            className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-base outline-none focus:border-sky-500"
+            type="datetime-local"
+            value={scheduledAt}
+            onChange={(event) => setScheduledAt(event.target.value)}
+          />
+          <span className="mt-1 block text-xs text-slate-500">
+            Quando você pretende executar a tarefa.
+          </span>
+        </label>
+
+        <label className="block">
           <span className="mb-2 block text-sm font-medium">Prazo</span>
           <input
             className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-base outline-none focus:border-sky-500"
@@ -177,6 +201,9 @@ export function TaskForm({
             value={dueDate}
             onChange={(event) => setDueDate(event.target.value)}
           />
+          <span className="mt-1 block text-xs text-slate-500">
+            Data limite; pode ser diferente da data planejada.
+          </span>
         </label>
 
         <label className="block">

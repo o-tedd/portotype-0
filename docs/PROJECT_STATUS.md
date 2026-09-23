@@ -25,6 +25,8 @@ feat/firebase-auth
 | React Router | Concluído | Rotas base disponíveis |
 | Layout responsivo | Concluído | Desktop + mobile |
 | Firebase config | Concluído | Variáveis via `.env.local` |
+| Desenvolvimento local | Concluído | Git + VS Code documentados |
+| Dev Container | Disponível | Opcional para ambiente portátil/Codespaces |
 | Repository Pattern | Em andamento | Auth/User + Task/Session contracts |
 | Authentication | Em desenvolvimento | Login, cadastro, logout, reset e sessão |
 | Rotas protegidas | Implementado na branch | Validação pendente no Firebase real |

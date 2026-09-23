@@ -2,106 +2,131 @@
 
 > Snapshot: 2026-09-23
 
-Este documento mostra o estado técnico atual do PORTOTYPE "0". Ele deve ser atualizado a cada milestone ou mudança estrutural importante.
+Este documento mostra o estado técnico atual do PORTOTYPE "0".
 
 ## Fase atual
 
-**MVP 0.2 — Firebase Authentication — em desenvolvimento**
+**MVP 0.3 — CRUD de tarefas — em desenvolvimento**
 
-A fundação foi integrada à `main` e a correção do CI foi mesclada pelo PR #4.
-
-A implementação de autenticação está sendo desenvolvida em:
+Branch atual:
 
 ```text
-feat/firebase-auth
+feat/tasks-crud
 ```
+
+Ela foi criada sobre `feat/firebase-auth`, que por sua vez contém a base documental necessária para acompanhar as mudanças.
 
 ## Estado por área
 
 | Área | Estado | Observação |
 | --- | --- | --- |
-| React + TypeScript + Vite | Concluído | Estrutura inicial criada |
-| Tailwind CSS | Concluído | Integrado ao Vite |
-| React Router | Concluído | Rotas base disponíveis |
-| Layout responsivo | Concluído | Desktop + mobile |
+| React + TypeScript + Vite | Concluído | Fundação criada |
+| Tailwind CSS | Concluído | Interface responsiva |
+| React Router | Concluído | Rotas públicas/protegidas |
 | Firebase config | Concluído | Variáveis via `.env.local` |
 | Desenvolvimento local | Concluído | Git + VS Code documentados |
-| Dev Container | Disponível | Opcional para ambiente portátil/Codespaces |
-| Repository Pattern | Em andamento | Auth/User + Task/Session contracts |
-| Authentication | Em desenvolvimento | Login, cadastro, logout, reset e sessão |
-| Rotas protegidas | Implementado na branch | Validação pendente no Firebase real |
-| Perfil inicial | Implementado na branch | `users/{uid}` |
-| Firestore Rules | Implementado na branch | Deploy manual ainda necessário |
-| Tasks CRUD | Pendente | MVP 0.3 |
-| Planner | Pendente | MVP 0.4 |
-| Study sessions | Modelo criado | Implementação posterior |
-| Gamificação | Pendente | XP, nível e streak |
-| Certificados | Pendente | Upload em fase posterior |
+| Authentication | Implementado | Validação real pelo usuário ainda pendente |
+| Firestore Rules | Implementado | Deploy no projeto Firebase ainda necessário |
+| Tasks Repository | Implementado | `FirebaseTaskRepository` |
+| Tasks Service | Implementado | CRUD + lifecycle |
+| Tasks CRUD UI | Implementado | Criar, editar, status e excluir |
+| Planner básico | Implementado | Lista, filtros e indicadores |
+| Planner diário/semanal/mensal | Pendente | MVP 0.4 |
+| Study sessions | Modelo criado | MVP 0.5 |
+| Dashboard dinâmico | Pendente | MVP 0.6 |
+| Gamificação | Pendente | MVP 0.7 |
+| Certificados | Pendente | MVP 0.8 |
 
-## CI
-
-O erro `TS5096` encontrado após o MVP 0.1 foi corrigido e integrado através do PR #4.
-
-Branches `feat/**`, `fix/**` e `main` são validadas pelo GitHub Actions.
-
-Gate atual:
+## Persistência de tarefas
 
 ```text
-npm run lint
-npm run build
+users/{uid}/tasks/{taskId}
 ```
 
-## Branches de trabalho relevantes
+Fluxo:
+
+```text
+PlannerPage
+   ↓
+useTasks
+   ↓
+TaskService
+   ↓
+TaskRepository
+   ↓
+FirebaseTaskRepository
+   ↓
+Firestore
+```
+
+## Branches de trabalho
+
+Enquanto as branches anteriores não forem integradas manualmente:
 
 ```text
 main
 └── docs/project-tracking
     └── feat/firebase-auth
+        └── feat/tasks-crud
 ```
 
-`feat/firebase-auth` foi criada a partir da branch de documentação para manter changelog, status e ADRs no mesmo histórico.
-
-Ao abrir os Pull Requests manualmente, integrar `docs/project-tracking` antes de `feat/firebase-auth` reduzirá ruído no diff.
+Para manter os diffs mais limpos, a ordem recomendada de integração é a mesma da árvore acima.
 
 ## Issues
 
-- Roadmap: #1
-- MVP 0.2 — Authentication: #2
+- #1 — Roadmap geral
+- #2 — MVP 0.2 Authentication
+- #5 — MVP 0.3 Tasks CRUD
 
-## MVP 0.2 — escopo implementado na branch
+## Validação
 
-- AuthRepository;
-- UserRepository;
-- FirebaseAuthRepository;
-- FirebaseUserRepository;
-- AuthService;
-- AuthContext;
-- useAuth;
-- cadastro;
-- login;
-- logout;
-- recuperação de senha;
-- persistência local de sessão;
-- ProtectedRoute;
-- PublicOnlyRoute;
-- perfil inicial em `users/{uid}`;
-- Security Rules iniciais;
-- documentação de setup Firebase.
+Por decisão do projeto, a integração/assistente não realizará testes funcionais manuais dentro do Work.
 
-## Validação técnica
+O fluxo será:
 
-O CI da branch `feat/firebase-auth` passou em `npm run lint` e `npm run build`.
+```text
+implementação no GitHub
+        ↓
+branch disponível
+        ↓
+usuário abre no VS Code
+        ↓
+testa com Firebase real
+        ↓
+retorna erros/resultados
+        ↓
+correção na branch
+```
+
+O GitHub Actions pode continuar executando lint/build automaticamente conforme o workflow versionado, mas o comportamento funcional será validado pelo proprietário.
+
+## MVP 0.3 — implementado na branch
+
+- FirebaseTaskRepository;
+- TaskService com regras de criação/edição/status/exclusão;
+- useTasks;
+- formulário de criação e edição;
+- listagem;
+- conclusão;
+- reabertura;
+- status "em andamento";
+- exclusão com confirmação;
+- filtros;
+- cálculo visual de atraso;
+- links externos;
+- XP potencial por dificuldade;
+- documentação do modelo.
 
 ## Pendente para concluir o milestone
 
-- configurar credenciais Web reais em `.env.local`;
-- habilitar Email/Password no Firebase Console;
-- publicar `firestore.rules`;
-- testar cadastro, logout, login e recuperação de senha contra o projeto Firebase real;
-- revisar comportamento de erros e estados de carregamento.
+- validar o fluxo no VS Code;
+- testar contra o Firebase real;
+- confirmar regras Firestore publicadas;
+- trazer eventuais erros encontrados;
+- abrir Pull Request manualmente quando a branch estiver aprovada.
 
-## Responsabilidade de Pull Request
+## Próximo milestone
 
-O código e a documentação podem ser preparados em branches pela integração/assistente.
+**MVP 0.4 — Planner diário, semanal e mensal**
 
-A abertura e o merge dos Pull Requests ficam sob responsabilidade do proprietário do repositório.
+Ele reutilizará a camada de tarefas criada no MVP 0.3.

@@ -8,3 +8,4 @@ dist
 *.log
 .vscode/*
 !.vscode/extensions.json
+!.vscode/settings.json

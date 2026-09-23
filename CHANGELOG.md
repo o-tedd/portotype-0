@@ -37,7 +37,16 @@ O formato é inspirado em **Keep a Changelog**. Durante o MVP, as versões repre
 - filtros de tarefas por status e atraso;
 - indicadores de total, ativas, concluídas e atrasadas no Planner;
 - documentação `docs/TASKS.md`;
-- ADR DEC-008 separando CRUD de tarefas da concessão de XP.
+- ADR DEC-008 separando CRUD de tarefas da concessão de XP;
+- campo `scheduledAt` exposto no formulário de tarefas;
+- visualização diária do Planner;
+- visualização semanal de segunda a domingo;
+- visualização mensal em grade de seis semanas;
+- navegação temporal anterior/hoje/próximo;
+- criação de tarefa pré-agendada a partir de um dia selecionado;
+- seção de tarefas sem data planejada;
+- documentação `docs/PLANNER.md`;
+- ADR DEC-009 separando data planejada de prazo.
 
 ### Changed
 
@@ -46,7 +55,9 @@ O formato é inspirado em **Keep a Changelog**. Durante o MVP, as versões repre
 - layout autenticado agora exibe usuário e ação de logout;
 - cabeçalho passa a identificar o milestone MVP 0.3;
 - conclusão de tarefa deixa de marcar `xpGranted` diretamente; XP real fica reservado ao módulo de gamificação;
-- validação funcional passa a ser realizada manualmente pelo proprietário no VS Code, enquanto alterações continuam sendo versionadas no GitHub.
+- validação funcional passa a ser realizada manualmente pelo proprietário no VS Code, enquanto alterações continuam sendo versionadas no GitHub;
+- Planner passa a usar `scheduledAt` para posicionamento temporal e `dueDate` exclusivamente para prazo/atraso;
+- cabeçalho passa a identificar o milestone MVP 0.4.
 
 ### Security
 

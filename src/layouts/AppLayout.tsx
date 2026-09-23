@@ -1,4 +1,5 @@
 import { NavLink, Outlet } from "react-router";
+import { useAuth } from "../hooks/useAuth";
 
 const navigation = [
   { to: "/app/dashboard", label: "Dashboard" },
@@ -9,40 +10,78 @@ const navigation = [
 ];
 
 export function AppLayout() {
+  const { profile, user, logout } = useAuth();
+
+  const displayName =
+    profile?.name || user?.displayName || user?.email || "Usuário";
+
+  async function handleLogout() {
+    await logout();
+  }
+
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 md:grid md:grid-cols-[240px_1fr]">
-      <aside className="hidden border-r border-slate-800 bg-slate-900/70 p-5 md:block">
-        <h1 className="text-xl font-bold tracking-tight">PORTOTYPE "0"</h1>
-        <p className="mt-1 text-xs text-slate-400">Productivity System</p>
+      <aside className="hidden border-r border-slate-800 bg-slate-900/70 p-5 md:flex md:flex-col">
+        <div>
+          <h1 className="text-xl font-bold tracking-tight">PORTOTYPE "0"</h1>
+          <p className="mt-1 text-xs text-slate-400">Productivity System</p>
 
-        <nav className="mt-8 space-y-2">
-          {navigation.map((item) => (
-            <NavLink
-              key={item.to}
-              to={item.to}
-              className={({ isActive }) =>
-                [
-                  "block rounded-lg px-3 py-2 text-sm transition",
-                  isActive
-                    ? "bg-slate-700 text-white"
-                    : "text-slate-400 hover:bg-slate-800 hover:text-slate-100",
-                ].join(" ")
-              }
-            >
-              {item.label}
-            </NavLink>
-          ))}
-        </nav>
+          <nav className="mt-8 space-y-2">
+            {navigation.map((item) => (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                className={({ isActive }) =>
+                  [
+                    "block rounded-lg px-3 py-2 text-sm transition",
+                    isActive
+                      ? "bg-slate-700 text-white"
+                      : "text-slate-400 hover:bg-slate-800 hover:text-slate-100",
+                  ].join(" ")
+                }
+              >
+                {item.label}
+              </NavLink>
+            ))}
+          </nav>
+        </div>
+
+        <div className="mt-auto border-t border-slate-800 pt-4">
+          <p className="truncate text-sm font-medium">{displayName}</p>
+          <p className="truncate text-xs text-slate-500">{user?.email}</p>
+          <button
+            className="mt-3 w-full rounded-lg border border-slate-700 px-3 py-2 text-sm text-slate-300 transition hover:bg-slate-800"
+            type="button"
+            onClick={handleLogout}
+          >
+            Sair
+          </button>
+        </div>
       </aside>
 
       <div className="min-w-0">
         <header className="flex items-center justify-between border-b border-slate-800 bg-slate-950/90 px-4 py-4 md:px-8">
           <div>
-            <p className="text-sm text-slate-400">MVP 0.1</p>
-            <p className="font-semibold">Foundation</p>
+            <p className="text-sm text-slate-400">MVP 0.2</p>
+            <p className="font-semibold">Authentication</p>
           </div>
-          <div className="rounded-full border border-slate-700 px-3 py-1 text-sm text-slate-300">
-            LV 1
+
+          <div className="flex items-center gap-3">
+            <div className="hidden text-right sm:block md:hidden">
+              <p className="max-w-36 truncate text-sm font-medium">{displayName}</p>
+            </div>
+
+            <div className="rounded-full border border-slate-700 px-3 py-1 text-sm text-slate-300">
+              LV {profile?.level ?? 1}
+            </div>
+
+            <button
+              className="rounded-lg border border-slate-700 px-3 py-2 text-xs text-slate-300 md:hidden"
+              type="button"
+              onClick={handleLogout}
+            >
+              Sair
+            </button>
           </div>
         </header>
 

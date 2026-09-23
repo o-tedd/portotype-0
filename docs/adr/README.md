@@ -11,6 +11,7 @@ Os ADRs registram decisões arquiteturais importantes do PORTOTYPE "0".
 | [DEC-005](DEC-005-user-data-isolation.md) | Isolamento de dados por UID | Aceita |
 | [DEC-006](DEC-006-domain-firebase-independence.md) | Domínio independente de tipos Firebase | Aceita |
 | [DEC-007](DEC-007-authentication-boundary.md) | Autenticação atrás de Repository e Service | Aceita |
+| [DEC-008](DEC-008-task-xp-boundary.md) | CRUD de tarefas não concede XP | Aceita |
 
 ## Quando criar um ADR
 

@@ -62,7 +62,16 @@ export function TaskCard({
         </div>
       </div>
 
-      <dl className="mt-5 grid gap-3 text-sm sm:grid-cols-2 xl:grid-cols-3">
+      <dl className="mt-5 grid gap-3 text-sm sm:grid-cols-2 xl:grid-cols-4">
+        <div>
+          <dt className="text-xs text-slate-500">Planejada para</dt>
+          <dd className="mt-1 text-slate-300">
+            {task.scheduledAt
+              ? formatTaskDate(task.scheduledAt)
+              : "Sem data"}
+          </dd>
+        </div>
+
         <div>
           <dt className="text-xs text-slate-500">Prazo</dt>
           <dd className="mt-1 text-slate-300">

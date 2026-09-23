@@ -34,13 +34,16 @@ A integração/assistente pode:
 - fazer commits;
 - corrigir falhas de CI;
 - atualizar documentação;
-- atualizar changelog.
+- atualizar changelog;
+- preparar branches para validação manual no VS Code.
 
 O proprietário do repositório:
 
 - abre Pull Requests;
 - revisa as alterações;
-- decide quando fazer merge.
+- decide quando fazer merge;
+- executa os testes funcionais/manuais no VS Code e no Firebase real;
+- retorna erros e resultados para correção na branch.
 
 ## Nomes de branches
 
@@ -96,7 +99,11 @@ npm run build
 
 estiverem passando.
 
-Testes automatizados serão adicionados como gate conforme o projeto evoluir.
+O GitHub Actions pode executar lint/build automaticamente.
+
+Testes funcionais manuais não serão executados pela integração/assistente dentro do Work, salvo solicitação explícita. A validação funcional será feita pelo proprietário no VS Code.
+
+Testes automatizados poderão ser adicionados como gate conforme o projeto evoluir.
 
 ## Regra Firebase
 

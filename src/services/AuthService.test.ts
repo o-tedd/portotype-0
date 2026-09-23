@@ -37,7 +37,8 @@ class FakeAuthRepository implements AuthRepository {
 
   async sendPasswordReset(): Promise<void> {}
 
-  subscribe(_listener: AuthStateListener): () => void {
+  subscribe(listener: AuthStateListener): () => void {
+    void listener;
     return () => {};
   }
 }
@@ -56,9 +57,12 @@ class FakeUserRepository implements UserRepository {
   }
 
   async update(
-    _userId: string,
-    _data: Partial<UserProfile>,
-  ): Promise<void> {}
+    userId: string,
+    data: Partial<UserProfile>,
+  ): Promise<void> {
+    void userId;
+    void data;
+  }
 }
 
 function authUser(

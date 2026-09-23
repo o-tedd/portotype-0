@@ -6,9 +6,15 @@ Este documento mostra o estado técnico atual do PORTOTYPE "0". Ele deve ser atu
 
 ## Fase atual
 
-**MVP 0.1 — Foundation**
+**MVP 0.2 — Firebase Authentication — em desenvolvimento**
 
-A fundação React foi criada e mesclada na `main`.
+A fundação foi integrada à `main` e a correção do CI foi mesclada pelo PR #4.
+
+A implementação de autenticação está sendo desenvolvida em:
+
+```text
+feat/firebase-auth
+```
 
 ## Estado por área
 
@@ -19,8 +25,11 @@ A fundação React foi criada e mesclada na `main`.
 | React Router | Concluído | Rotas base disponíveis |
 | Layout responsivo | Concluído | Desktop + mobile |
 | Firebase config | Concluído | Variáveis via `.env.local` |
-| Repository Pattern | Em andamento | Contratos iniciais criados |
-| Authentication | Próximo | MVP 0.2 |
+| Repository Pattern | Em andamento | Auth/User + Task/Session contracts |
+| Authentication | Em desenvolvimento | Login, cadastro, logout, reset e sessão |
+| Rotas protegidas | Implementado na branch | Validação pendente no Firebase real |
+| Perfil inicial | Implementado na branch | `users/{uid}` |
+| Firestore Rules | Implementado na branch | Deploy manual ainda necessário |
 | Tasks CRUD | Pendente | MVP 0.3 |
 | Planner | Pendente | MVP 0.4 |
 | Study sessions | Modelo criado | Implementação posterior |
@@ -29,39 +38,40 @@ A fundação React foi criada e mesclada na `main`.
 
 ## CI
 
-O primeiro CI executado na `main` após o merge do MVP 0.1 falhou com o erro TypeScript `TS5096`.
+O erro `TS5096` encontrado após o MVP 0.1 foi corrigido e integrado através do PR #4.
 
-Causa: a versão antiga de `tsconfig.node.json` chegou à `main` antes da correção.
+Branches `feat/**`, `fix/**` e `main` são validadas pelo GitHub Actions.
 
-Correção preparada em:
+Gate atual:
 
 ```text
-fix/ci-typescript-config
+npm run lint
+npm run build
 ```
-
-A configuração corrigida foi validada com sucesso em branch antes de ser preparada para integração na `main`.
 
 ## Branches de trabalho relevantes
 
 ```text
 main
-├── fix/ci-typescript-config
 └── docs/project-tracking
+    └── feat/firebase-auth
 ```
+
+`feat/firebase-auth` foi criada a partir da branch de documentação para manter changelog, status e ADRs no mesmo histórico.
+
+Ao abrir os Pull Requests manualmente, integrar `docs/project-tracking` antes de `feat/firebase-auth` reduzirá ruído no diff.
 
 ## Issues
 
 - Roadmap: #1
 - MVP 0.2 — Authentication: #2
 
-## Próximo milestone
-
-**MVP 0.2 — Firebase Authentication**
-
-Escopo planejado:
+## MVP 0.2 — escopo implementado na branch
 
 - AuthRepository;
+- UserRepository;
 - FirebaseAuthRepository;
+- FirebaseUserRepository;
 - AuthService;
 - AuthContext;
 - useAuth;
@@ -69,9 +79,21 @@ Escopo planejado:
 - login;
 - logout;
 - recuperação de senha;
-- persistência de sessão;
+- persistência local de sessão;
 - ProtectedRoute;
-- criação do perfil inicial em `users/{uid}`.
+- PublicOnlyRoute;
+- perfil inicial em `users/{uid}`;
+- Security Rules iniciais;
+- documentação de setup Firebase.
+
+## Pendente para concluir o milestone
+
+- validar CI da branch;
+- configurar credenciais Web reais em `.env.local`;
+- habilitar Email/Password no Firebase Console;
+- publicar `firestore.rules`;
+- testar cadastro, logout, login e recuperação de senha contra o projeto Firebase real;
+- revisar comportamento de erros e estados de carregamento.
 
 ## Responsabilidade de Pull Request
 

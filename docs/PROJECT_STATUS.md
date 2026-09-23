@@ -73,7 +73,17 @@ A ordem recomendada de integração é a mesma da árvore.
 
 ## Validação
 
-Testes funcionais/manuais serão executados pelo proprietário no VS Code/Firebase.
+Validação automática atual:
+
+```text
+21 automated tests ✅
+Lint               ✅
+Production build   ✅
+```
+
+Consulte `docs/TESTING.md` para a matriz completa.
+
+Testes funcionais/manuais com navegador e Firebase real serão executados pelo proprietário no VS Code/Firebase.
 
 Fluxo:
 
@@ -113,6 +123,7 @@ correções na mesma branch
 - validar tarefas sem data;
 - validar responsividade;
 - trazer eventuais erros;
+- acompanhar a otimização futura do bundle JS (aviso não bloqueante acima de 500 kB);
 - abrir Pull Request manualmente após aprovação.
 
 ## Próximo milestone

@@ -69,6 +69,7 @@ Veja [docs/FIREBASE_SETUP.md](docs/FIREBASE_SETUP.md) para habilitar Authenticat
 - [Status atual](docs/PROJECT_STATUS.md)
 - [Arquitetura](docs/ARCHITECTURE.md)
 - [Configuração Firebase](docs/FIREBASE_SETUP.md)
+- [Modelo e fluxo de tarefas](docs/TASKS.md)
 - [Desenvolvimento local e VS Code](docs/LOCAL_DEVELOPMENT.md)
 - [Fluxo de desenvolvimento](docs/DEVELOPMENT_WORKFLOW.md)
 - [Architecture Decision Records](docs/adr/README.md)
@@ -120,6 +121,6 @@ devem estar passando.
 
 ## Status atual
 
-**MVP 0.2 — Firebase Authentication — em desenvolvimento**
+**MVP 0.3 — CRUD de tarefas — em desenvolvimento**
 
 Consulte [docs/PROJECT_STATUS.md](docs/PROJECT_STATUS.md) para o snapshot técnico mais recente.

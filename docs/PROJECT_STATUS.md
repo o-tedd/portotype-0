@@ -6,15 +6,15 @@ Este documento mostra o estado técnico atual do PORTOTYPE "0".
 
 ## Fase atual
 
-**MVP 0.3 — CRUD de tarefas — em desenvolvimento**
+**MVP 0.4 — Planner diário, semanal e mensal — em desenvolvimento**
 
 Branch atual:
 
 ```text
-feat/tasks-crud
+feat/planner-views
 ```
 
-Ela foi criada sobre `feat/firebase-auth`, que por sua vez contém a base documental necessária para acompanhar as mudanças.
+Ela foi criada sobre `feat/tasks-crud`.
 
 ## Estado por área
 
@@ -30,34 +30,25 @@ Ela foi criada sobre `feat/firebase-auth`, que por sua vez contém a base docume
 | Tasks Repository | Implementado | `FirebaseTaskRepository` |
 | Tasks Service | Implementado | CRUD + lifecycle |
 | Tasks CRUD UI | Implementado | Criar, editar, status e excluir |
-| Planner básico | Implementado | Lista, filtros e indicadores |
-| Planner diário/semanal/mensal | Pendente | MVP 0.4 |
+| Planner diário | Implementado | Tarefas por `scheduledAt` |
+| Planner semanal | Implementado | Segunda a domingo |
+| Planner mensal | Implementado | Grade de seis semanas |
+| Tarefas sem data | Implementado | Caixa de entrada separada |
 | Study sessions | Modelo criado | MVP 0.5 |
 | Dashboard dinâmico | Pendente | MVP 0.6 |
 | Gamificação | Pendente | MVP 0.7 |
 | Certificados | Pendente | MVP 0.8 |
 
-## Persistência de tarefas
+## Regra temporal
 
 ```text
-users/{uid}/tasks/{taskId}
+scheduledAt = quando a tarefa será executada
+dueDate     = quando a tarefa vence
 ```
 
-Fluxo:
+As visualizações do Planner usam `scheduledAt`.
 
-```text
-PlannerPage
-   ↓
-useTasks
-   ↓
-TaskService
-   ↓
-TaskRepository
-   ↓
-FirebaseTaskRepository
-   ↓
-Firestore
-```
+O cálculo de atraso usa `dueDate`.
 
 ## Branches de trabalho
 
@@ -68,65 +59,64 @@ main
 └── docs/project-tracking
     └── feat/firebase-auth
         └── feat/tasks-crud
+            └── feat/planner-views
 ```
 
-Para manter os diffs mais limpos, a ordem recomendada de integração é a mesma da árvore acima.
+A ordem recomendada de integração é a mesma da árvore.
 
 ## Issues
 
 - #1 — Roadmap geral
 - #2 — MVP 0.2 Authentication
 - #5 — MVP 0.3 Tasks CRUD
+- #6 — MVP 0.4 Planner views
 
 ## Validação
 
-Por decisão do projeto, a integração/assistente não realizará testes funcionais manuais dentro do Work.
+Testes funcionais/manuais serão executados pelo proprietário no VS Code/Firebase.
 
-O fluxo será:
+Fluxo:
 
 ```text
 implementação no GitHub
         ↓
-branch disponível
+usuário abre a branch no VS Code
         ↓
-usuário abre no VS Code
-        ↓
-testa com Firebase real
+testa comportamento real
         ↓
 retorna erros/resultados
         ↓
-correção na branch
+correções na mesma branch
 ```
 
-O GitHub Actions pode continuar executando lint/build automaticamente conforme o workflow versionado, mas o comportamento funcional será validado pelo proprietário.
+## MVP 0.4 — implementado na branch
 
-## MVP 0.3 — implementado na branch
-
-- FirebaseTaskRepository;
-- TaskService com regras de criação/edição/status/exclusão;
-- useTasks;
-- formulário de criação e edição;
-- listagem;
-- conclusão;
-- reabertura;
-- status "em andamento";
-- exclusão com confirmação;
-- filtros;
-- cálculo visual de atraso;
-- links externos;
-- XP potencial por dificuldade;
-- documentação do modelo.
+- campo "Planejada para";
+- separação entre planejamento e prazo;
+- visão diária;
+- visão semanal;
+- visão mensal;
+- anterior / hoje / próximo;
+- clique em dia levando à visão diária;
+- criação pré-agendada para o dia escolhido;
+- edição de tarefa a partir do calendário;
+- tarefas sem data planejada em seção própria;
+- filtros existentes aplicados às visualizações;
+- rolagem horizontal local para semana/mês em telas estreitas;
+- documentação do comportamento temporal.
 
 ## Pendente para concluir o milestone
 
-- validar o fluxo no VS Code;
-- testar contra o Firebase real;
-- confirmar regras Firestore publicadas;
-- trazer eventuais erros encontrados;
-- abrir Pull Request manualmente quando a branch estiver aprovada.
+- validar no VS Code a navegação Dia/Semana/Mês;
+- criar tarefas com `scheduledAt` e confirmar posicionamento;
+- verificar diferença entre data planejada e prazo;
+- validar tarefas sem data;
+- validar responsividade;
+- trazer eventuais erros;
+- abrir Pull Request manualmente após aprovação.
 
 ## Próximo milestone
 
-**MVP 0.4 — Planner diário, semanal e mensal**
+**MVP 0.5 — Study sessions + cronômetro**
 
-Ele reutilizará a camada de tarefas criada no MVP 0.3.
+Esse milestone conectará tarefas e links externos ao registro real de sessões de estudo.

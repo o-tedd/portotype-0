@@ -36,8 +36,45 @@ export function useTasks() {
   }, [user]);
 
   useEffect(() => {
-    void loadTasks();
-  }, [loadTasks]);
+    let active = true;
+
+    if (!user) {
+      queueMicrotask(() => {
+        if (active) {
+          setTasks([]);
+          setError("");
+          setLoading(false);
+        }
+      });
+
+      return () => {
+        active = false;
+      };
+    }
+
+    void taskService
+      .getTasks(user.id)
+      .then((nextTasks) => {
+        if (active) {
+          setTasks(nextTasks);
+          setError("");
+        }
+      })
+      .catch((caughtError) => {
+        if (active) {
+          setError(messageFromError(caughtError));
+        }
+      })
+      .finally(() => {
+        if (active) {
+          setLoading(false);
+        }
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [user]);
 
   const runMutation = useCallback(
     async (operation: (userId: string) => Promise<void>) => {
@@ -54,7 +91,7 @@ export function useTasks() {
       } catch (caughtError) {
         const message = messageFromError(caughtError);
         setError(message);
-        throw new Error(message);
+        throw new Error(message, { cause: caughtError });
       } finally {
         setSaving(false);
       }

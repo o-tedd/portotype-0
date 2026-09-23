@@ -46,7 +46,11 @@ O formato é inspirado em **Keep a Changelog**. Durante o MVP, as versões repre
 - criação de tarefa pré-agendada a partir de um dia selecionado;
 - seção de tarefas sem data planejada;
 - documentação `docs/PLANNER.md`;
-- ADR DEC-009 separando data planejada de prazo.
+- ADR DEC-009 separando data planejada de prazo;
+- Vitest como runner de testes automatizados;
+- 21 testes cobrindo AuthService, TaskService, datas do Planner e status de tarefas;
+- etapa `npm test` no GitHub Actions antes de lint/build;
+- documentação `docs/TESTING.md` com matriz de validação.
 
 ### Changed
 
@@ -57,7 +61,8 @@ O formato é inspirado em **Keep a Changelog**. Durante o MVP, as versões repre
 - conclusão de tarefa deixa de marcar `xpGranted` diretamente; XP real fica reservado ao módulo de gamificação;
 - validação funcional passa a ser realizada manualmente pelo proprietário no VS Code, enquanto alterações continuam sendo versionadas no GitHub;
 - Planner passa a usar `scheduledAt` para posicionamento temporal e `dueDate` exclusivamente para prazo/atraso;
-- cabeçalho passa a identificar o milestone MVP 0.4.
+- cabeçalho passa a identificar o milestone MVP 0.4;
+- GitHub Actions atualizado para `actions/checkout@v7` e `actions/setup-node@v7`.
 
 ### Security
 

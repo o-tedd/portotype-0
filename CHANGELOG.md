@@ -29,14 +29,24 @@ O formato é inspirado em **Keep a Changelog**. Durante o MVP, as versões repre
 - guia `docs/FIREBASE_SETUP.md`;
 - guia `docs/LOCAL_DEVELOPMENT.md` para uso manual com Git e VS Code;
 - recomendações compartilhadas de extensões e configurações do VS Code;
-- configuração opcional de Dev Container para ambiente Node 22 portátil.
+- configuração opcional de Dev Container para ambiente Node 22 portátil;
+- `FirebaseTaskRepository` persistindo tarefas em `users/{uid}/tasks`;
+- `useTasks` para conectar o Planner ao `TaskService`;
+- criação, edição, conclusão, reabertura e exclusão de tarefas;
+- formulário de tarefas com prioridade, dificuldade, prazo, duração estimada, link externo e observações;
+- filtros de tarefas por status e atraso;
+- indicadores de total, ativas, concluídas e atrasadas no Planner;
+- documentação `docs/TASKS.md`;
+- ADR DEC-008 separando CRUD de tarefas da concessão de XP.
 
 ### Changed
 
 - definido que Pull Requests e merges serão abertos/executados manualmente pelo proprietário do repositório;
 - definido que mudanças funcionais devem atualizar este changelog antes do merge;
 - layout autenticado agora exibe usuário e ação de logout;
-- cabeçalho passa a identificar o milestone MVP 0.2.
+- cabeçalho passa a identificar o milestone MVP 0.3;
+- conclusão de tarefa deixa de marcar `xpGranted` diretamente; XP real fica reservado ao módulo de gamificação;
+- validação funcional passa a ser realizada manualmente pelo proprietário no VS Code, enquanto alterações continuam sendo versionadas no GitHub.
 
 ### Security
 

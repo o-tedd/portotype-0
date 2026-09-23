@@ -1,4 +1,9 @@
-export type TaskStatus = "planned" | "in_progress" | "completed" | "cancelled";
+export type TaskStatus =
+  | "planned"
+  | "in_progress"
+  | "completed"
+  | "cancelled";
+
 export type TaskPriority = "low" | "medium" | "high";
 export type TaskDifficulty = "easy" | "medium" | "hard";
 
@@ -22,4 +27,17 @@ export interface Task {
   xpReward: number;
   xpGranted: boolean;
   certificateId?: string;
+}
+
+export interface TaskFormInput {
+  title: string;
+  description?: string;
+  categoryId?: string;
+  priority: TaskPriority;
+  difficulty: TaskDifficulty;
+  dueDate?: Date;
+  scheduledAt?: Date;
+  estimatedDurationMinutes?: number;
+  externalUrl?: string;
+  notes?: string;
 }

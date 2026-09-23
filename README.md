@@ -74,6 +74,29 @@ VITE_FIREBASE_APP_ID
 
 O arquivo `.env.local` não deve ser commitado.
 
+## Documentação do projeto
+
+- [Changelog](CHANGELOG.md)
+- [Status atual](docs/PROJECT_STATUS.md)
+- [Arquitetura](docs/ARCHITECTURE.md)
+- [Fluxo de desenvolvimento](docs/DEVELOPMENT_WORKFLOW.md)
+- [Architecture Decision Records](docs/adr/README.md)
+
+## Como trabalharemos
+
+As alterações serão preparadas em branches com código, commits, changelog e documentação.
+
+A abertura e o merge de Pull Requests serão feitos manualmente pelo proprietário do repositório.
+
+Antes de integrar uma branch:
+
+```bash
+npm run lint
+npm run build
+```
+
+devem estar passando.
+
 ## Roadmap
 
 1. Foundation
@@ -86,10 +109,8 @@ O arquivo `.env.local` não deve ser commitado.
 8. Certificados
 9. Conquistas e refinamentos
 
-## Decisões de arquitetura
-
-Consulte `docs/adr/`.
-
 ## Status atual
 
 **MVP 0.1 — Foundation**
+
+Consulte [docs/PROJECT_STATUS.md](docs/PROJECT_STATUS.md) para o snapshot técnico mais recente.

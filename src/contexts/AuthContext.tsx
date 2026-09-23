@@ -60,6 +60,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
             setProfile(nextProfile);
           }
         })
+        .catch(() => {
+          if (active) {
+            setProfile(null);
+          }
+        })
         .finally(() => {
           if (active) {
             setLoading(false);
